@@ -1,0 +1,30 @@
+version: '3'
+services:
+  db:
+    container_name: db_container
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=my_db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=123456
+      - MYSQL_ROOT_PASSWORD=root
+  web:
+    container_name: web_container
+    build: ./
+    ports:
+      - "80:80"
+    volumes:
+      - ./project:/var/www/
+      - ./sites-available:/etc/apache2/sites-available/
+  myadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      - DEBIAN_FRONTEND=noninteractive
+      - MYSQL_ROOT_PASSWORD=root
+      - PMA_PORT=3306
+      - PMA_HOST=db_container
