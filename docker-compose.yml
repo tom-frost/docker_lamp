@@ -15,9 +15,12 @@ services:
     build: ./
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./project:/var/www/
       - ./sites-available:/etc/apache2/sites-available/
+      - ./ssl/server.pem:/etc/ssl/certs/server.pem
+      - ./ssl/server.key:/etc/ssl/private/server.key
   myadmin:
     container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin

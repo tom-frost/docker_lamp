@@ -52,9 +52,19 @@ RUN a2dissite default-ssl.conf
 
 COPY ./sites-available/vhost.conf /etc/apache2/sites-available/
 
+COPY ./sites-available/default-ssl.conf /etc/apache2/sites-available/
+
+COPY ./ssl/server.pem /etc/ssl/certs/server.pem
+
+COPY ./ssl/server.key /etc/ssl/private/server.key
+
+RUN a2enmod ssl
+
 RUN chown -R www-data:www-data /var/www/
 
 RUN a2ensite vhost.conf
+
+RUN a2ensite default-ssl.conf
 
 EXPOSE 80
 
